@@ -1,16 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useContext } from "react";
-
 import { getProductById } from "@/lib/products";
 import { CartContext } from "@/context/CartContext";
 
-export default async function ProductPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const product = await getProductById(parseInt(params.id));
+interface Props {
+  params: Promise<{ id: string }>;
+}
+
+export default async function ProductPage({ params }: Props) {
+  const { id } = await params;
+  const product = await getProductById(parseInt(id));
 
   if (!product) {
     return <div>Product not found</div>;
@@ -31,6 +31,7 @@ export default async function ProductPage({
           width={400}
           height={400}
           className="object-cover"
+          priority
         />
         <div>
           <h1 className="text-2xl font-bold mb-4">{product.name}</h1>
@@ -43,6 +44,7 @@ export default async function ProductPage({
   );
 }
 
+// Mark client component with "use client" directive
 function ClientAddToCart({
   product,
 }: {
