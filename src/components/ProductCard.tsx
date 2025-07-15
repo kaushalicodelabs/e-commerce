@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
 import { Product } from "../lib/products";
+import { CartContext } from "@/context/CartContext";
+import { useContext } from "react";
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useContext(CartContext);
